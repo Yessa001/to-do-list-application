@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const secureStorage = FlutterSecureStorage();
-const String baseUrl = 'http://192.168.1.10:8002';
+const String baseUrl = 'http://192.168.137.15:8002';
 
 // Register Users
 Future<void> register(String name, String email, String password, String passwordConfirmation) async {

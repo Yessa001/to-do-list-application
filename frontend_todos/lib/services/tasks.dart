@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const secureStorage = FlutterSecureStorage();
 const String baseUrl =
-    'http://192.168.1.10:8002/api'; // Ganti dengan base URL yang sesuai
+    'http://192.168.137.15:8002/api'; // Ganti dengan base URL yang sesuai
 
 // Fetch all tasks
 Future<List<Map<String, dynamic>>> fetchTasks() async {
