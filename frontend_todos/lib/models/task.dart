@@ -25,4 +25,6 @@ class Task {
       'status': status,
     };
   }
+
+  static fromMap(Map<String, dynamic> task) {}
 }

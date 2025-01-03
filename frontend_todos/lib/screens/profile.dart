@@ -32,8 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _logout() async {
     try {
-      await logout(); // Fungsi logout dari service auth
-      Navigator.pushReplacementNamed(context, '/login'); // Redirect ke halaman login
+      await logout();
+      Navigator.pushReplacementNamed(context, '/login');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Gagal logout: $e')),
@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: Colors.indigo[50],
         title: const Text(
-          'Profile',
+          'Profil Pengguna',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
         ),
         centerTitle: true,
@@ -62,6 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      const SizedBox(height: 50),
                       // Profile Picture
                       CircleAvatar(
                         radius: 60,
@@ -95,7 +96,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       // Button to Edit Profile
                       ElevatedButton(
                         onPressed: () {
-                          // Tambahkan logika untuk edit profile
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.indigo[600],

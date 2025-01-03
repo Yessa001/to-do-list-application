@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'widgets/splash_screen.dart';
 import 'screens/login.dart';
 import 'screens/register.dart';
+import 'screens/categories.dart';
 import 'screens/home.dart';
 import 'screens/profile.dart';
 import 'screens/add_task.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/home': (context) => const MainContainer(selectedIndex: 0),
-        '/profile': (context) => const MainContainer(selectedIndex: 1),
+        '/category': (context) => const MainContainer(selectedIndex: 1),
+        '/profile': (context) => const MainContainer(selectedIndex: 3),
         '/add_task': (context) => const MainContainer(selectedIndex: 2),
       },
     );
@@ -54,7 +56,6 @@ class _MainContainerState extends State<MainContainer> {
   }
 
   void _onItemTapped(int index) {
-    // Update the current index without animating the entire MainContainer
     setState(() {
       _currentIndex = index;
     });
@@ -62,9 +63,9 @@ class _MainContainerState extends State<MainContainer> {
 
   @override
   Widget build(BuildContext context) {
-    // Define the list of screens corresponding to the selected index
     final List<Widget> screens = [
       const HomeScreen(),
+      const CategoryScreen(),
       const AddTaskScreen(),
       const ProfileScreen(),
     ];

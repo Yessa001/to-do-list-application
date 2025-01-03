@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const secureStorage = FlutterSecureStorage();
-const String baseUrl = 'http://192.168.137.15:8002';
+const String baseUrl = 'http://192.168.0.110:8002';
 
 // Register Users
 Future<void> register(String name, String email, String password, String passwordConfirmation) async {
@@ -47,9 +47,8 @@ Future<void> login(String email, String password) async {
 
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
-    print('Response data: $data');  // Tambahkan ini untuk melihat data respons
+    print('Response data: $data'); 
 
-    // Akses token langsung dari respons
     if (data.containsKey('token')) {
       final accessToken = data['token'];
 

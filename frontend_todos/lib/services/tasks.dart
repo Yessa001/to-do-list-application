@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const secureStorage = FlutterSecureStorage();
 const String baseUrl =
-    'http://192.168.137.15:8002/api'; // Ganti dengan base URL yang sesuai
+    'http://192.168.0.110:8002/api'; 
 
 // Fetch all tasks
 Future<List<Map<String, dynamic>>> fetchTasks() async {
@@ -55,14 +55,12 @@ Future<void> addTask(
     );
 
     if (response.statusCode == 201) {
-      // Task berhasil ditambahkan
       print('Task berhasil ditambahkan');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Task berhasil ditambahkan!')),
       );
 
-      // Pindah ke halaman Home setelah berhasil menambah task
-      Navigator.pushReplacementNamed(context, '/homeS');
+      Navigator.pushReplacementNamed(context, '/home');
     } else if (response.statusCode == 401) {
       throw Exception('Unauthorized: Token expired or invalid');
     } else {
@@ -71,7 +69,6 @@ Future<void> addTask(
           'Error adding task: ${error['message'] ?? 'Server error'}');
     }
   } catch (e) {
-    // Tangani kesalahan jaringan atau server lainnya
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Gagal menambah task: $e')),
     );

@@ -61,6 +61,7 @@ class TaskController extends Controller {
         'description': 'required',
         'due_date': 'required|date',
         'status': 'required',
+        'category_id': 'required|integer', // Pastikan kategori divalidasi
       });
 
       // Ambil data yang akan diupdate
@@ -69,6 +70,7 @@ class TaskController extends Controller {
         'description': request.input('description'),
         'due_date': request.input('due_date'),
         'status': request.input('status'),
+        'category_id': request.input('category_id'), // Tambahkan category_id
         'updated_at': DateTime.now().toIso8601String(),
       };
 

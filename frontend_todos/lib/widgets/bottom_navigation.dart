@@ -20,6 +20,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.folder),
+          label: 'Category',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.add_box),
           label: 'Add Task',
         ),
@@ -28,11 +32,11 @@ class BottomNavigationBarWidget extends StatelessWidget {
           label: 'Profile',
         ),
       ],
-      selectedItemColor: Colors.indigo[900],
+      selectedItemColor: Colors.indigo,
       unselectedItemColor: Colors.grey,
-      selectedLabelStyle: TextStyle(
+      selectedLabelStyle: const TextStyle(
         fontSize: 12.0,
-        color: Colors.indigo[900],
+        color: Colors.indigo,
       ),
       unselectedLabelStyle: const TextStyle(
         fontSize: 11.0,

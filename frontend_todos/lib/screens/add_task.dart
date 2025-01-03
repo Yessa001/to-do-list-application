@@ -11,7 +11,6 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // Form fields
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _dueDateController = TextEditingController();
@@ -44,7 +43,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       };
 
       try {
-        await addTask(context, taskData); 
+        await addTask(context, taskData);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Task berhasil ditambahkan!')),
         );
@@ -64,97 +63,187 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.indigo[50],
       appBar: AppBar(
-        title: const Text('Tambah Task'),
+        backgroundColor: Colors.indigo[50],
+        title: const Text(
+          'Tambah Task',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.indigo),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/home');
+          },
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              // Category
-              DropdownButtonFormField<int>(
-                value: _categoryId,
-                decoration: const InputDecoration(labelText: 'Kategori Task'),
-                items: _categories
-                    .map((category) => DropdownMenuItem<int>(
-                          value: category['id'],
-                          child: Text(category['name']),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _categoryId = value ?? 1;
-                  });
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Pilih kategori task';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              // Title field
-              TextFormField(
-                controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Judul Task'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Judul tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              // Description field
-              TextFormField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(labelText: 'Deskripsi'),
-                maxLines: 3,
-              ),
-              const SizedBox(height: 16),
-              // Due Date field
-              TextFormField(
-                controller: _dueDateController,
-                decoration: const InputDecoration(
-                  labelText: 'Deadline (YYYY-MM-DD)',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Deadline tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              // Status dropdown
-              DropdownButtonFormField<String>(
-                value: _status,
-                decoration: const InputDecoration(labelText: 'Status'),
-                items: const [
-                  DropdownMenuItem(value: 'Pending', child: Text('Pending')),
-                  DropdownMenuItem(
-                      value: 'In Progress', child: Text('In Progress')),
-                  DropdownMenuItem(
-                      value: 'Completed', child: Text('Completed')),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _status = value ?? 'Pending';
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-              // Submit button
-              _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : ElevatedButton(
-                      onPressed: _submitTask,
-                      child: const Text('Tambah Task'),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Card(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    const Text(
+                      'Silahkan Tambahkan Task Anda!',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-            ],
+                    const SizedBox(height: 20),
+
+                    DropdownButtonFormField<int>(
+                      value: _categoryId,
+                      decoration: InputDecoration(
+                        hintText: 'Pilih Kategori Task',
+                        filled: true,
+                        fillColor: Colors.indigo.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      items: _categories
+                          .map((category) => DropdownMenuItem<int>(
+                                value: category['id'],
+                                child: Text(category['name']),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _categoryId = value ?? 1;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Pilih kategori task';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Title field
+                    TextFormField(
+                      controller: _titleController,
+                      decoration: InputDecoration(
+                        hintText: 'Judul Task',
+                        filled: true,
+                        fillColor: Colors.indigo.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Judul tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Description field
+                    TextFormField(
+                      controller: _descriptionController,
+                      decoration: InputDecoration(
+                        hintText: 'Deskripsi',
+                        filled: true,
+                        fillColor: Colors.indigo.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Due Date field
+                    TextFormField(
+                      controller: _dueDateController,
+                      decoration: InputDecoration(
+                        hintText: 'Tenggat Waktu (YYYY-MM-DD)',
+                        filled: true,
+                        fillColor: Colors.indigo.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Tenggat waktu tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Status dropdown
+                    DropdownButtonFormField<String>(
+                      value: _status,
+                      decoration: InputDecoration(
+                        hintText: 'Pilih Status',
+                        filled: true,
+                        fillColor: Colors.indigo.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                            value: 'Pending', child: Text('Pending')),
+                        DropdownMenuItem(
+                            value: 'In Progress', child: Text('In Progress')),
+                        DropdownMenuItem(
+                            value: 'Completed', child: Text('Completed')),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _status = value ?? 'Pending';
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 25),
+
+                    // Submit button
+                    _isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.indigo,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 50),
+                            ),
+                            onPressed: _submitTask,
+                            child: const Text(
+                              'Tambah Task',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),

@@ -13,6 +13,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Map<String, dynamic>>> _tasksFuture;
 
+  final Map<int, String> categoryNames = {
+    1: 'Work',
+    2: 'Personal',
+    3: 'Learning',
+  };
+
   @override
   void initState() {
     super.initState();
@@ -33,15 +39,17 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       await deleteTask(taskId);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Task berhasil dihapus!'),
-        backgroundColor: Colors.green,
+        const SnackBar(
+          content: Text('Task berhasil dihapus!'),
+          backgroundColor: Colors.green,
         ),
       );
-      _refreshTasks();
+      _refreshTasks(); 
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gagal menghapus task: $e'),
-        backgroundColor: Colors.red,
+        SnackBar(
+          content: Text('Gagal menghapus task: $e'),
+          backgroundColor: Colors.red,
         ),
       );
     }
@@ -66,11 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         centerTitle: true,
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(  // Handle future response for tasks
-        future: _tasksFuture,
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: _tasksFuture, 
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator()); 
           } else if (snapshot.hasError) {
             return Center(
               child: Text('Error: ${snapshot.error}'),
@@ -89,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: tasks.length,
             itemBuilder: (context, index) {
               final task = tasks[index];
+              String categoryName = categoryNames[task['category_id']] ?? 'Unknown';
               return Card(
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -99,13 +108,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   contentPadding: const EdgeInsets.all(16),
                   title: Text(
                     task['title'],
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.indigo),
                   ),
                   subtitle: Text(
                     'Deskripsi: ${task['description'] ?? '-'}\n'
-                    'Tanggal: ${task['due_date']}\n'
+                    'Tenggat Waktu: ${task['due_date']}\n'
+                    'Kategori: $categoryName\n'
                     'Status: ${task['status']}',
-                    style: const TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   isThreeLine: true,
                   trailing: Row(
@@ -123,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
 
                           if (result == true) {
-                            _refreshTasks();
+                            _refreshTasks(); 
                           }
                         },
                       ),
@@ -150,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
 
           if (result == true) {
-            _refreshTasks();
+            _refreshTasks(); 
           }
         },
         backgroundColor: Colors.indigo,
@@ -171,13 +181,13 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                _deleteTask(taskId); // Panggil fungsi hapus task
+                _deleteTask(taskId);
               },
               child: const Text('Hapus'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Cukup menutup dialog
+                Navigator.pop(context);
               },
               child: const Text('Batal'),
             ),
